@@ -1,2 +1,3 @@
-.env
-fast-api_structure.py
+.env/
+fast-api_structure.py/
+.venv/
