@@ -13,6 +13,10 @@ TEMPERATURE = 0
 LOG_DIR = "logs"
 TEMP_FOLDER_NAME = "temp"
 
+# Model
+DETECTION_MODEL = "model/db_resnet50.pt"
+RECOGNIZE_MODEL = "model/crnn_mobilenet_v3_large_pt.pt"
+
 
 
 # Prompt
