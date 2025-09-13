@@ -1,6 +1,7 @@
 langchain
 langchain_core
 langchain_openai
+langchain_anthropic
 langgraph
 dotenv
 uvicorn

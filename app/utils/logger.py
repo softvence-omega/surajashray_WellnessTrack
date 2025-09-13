@@ -2,7 +2,7 @@ import logging
 import os
 from datetime import datetime
 
-from config import LOG_DIR
+from app.config import LOG_DIR
 
 
 # Make DIR

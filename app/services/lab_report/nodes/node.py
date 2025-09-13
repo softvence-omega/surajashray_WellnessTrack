@@ -1,8 +1,12 @@
 from langchain_core.messages import HumanMessage, SystemMessage
 
-from state.state import ReportState
-from ....schemas.schema import MedicalReportClassify, WellnessReport
-from ....config import SYSTEM_PROMPT
+from app.services.lab_report.state.state import ReportState
+from app.schemas.schema import MedicalReportClassify, WellnessReport
+from app.config import SYSTEM_PROMPT
+from app.utils.logger import get_logger
+
+
+logger = get_logger(__name__)
 
 
 class ReportNode:
@@ -23,14 +27,17 @@ class ReportNode:
         """
         print("CLASSIFYING REPORT............")
         
-        text = state["report_text"]
+        self.text = state["report_text"]
         
-        llm_with_structure_output = self.llm.with_structured_output(MedicalReportClassify)
-        output = llm_with_structure_output.invoke(text)
+        try:
+            self.llm_with_structure_output = self.llm.with_structured_output(MedicalReportClassify)
+            output = self.llm_with_structure_output.invoke(self.text)
+            
+            state["report_status"] = output.check
         
-        state["report_status"] = output.check
-    
-        return state
+            return state
+        except Exception as e:
+            raise ValueError(e)
     
     ### Node 2
     def generate_report(self, state: ReportState):
@@ -45,23 +52,35 @@ class ReportNode:
         """
         print("GENERATING REPORT............")
 
-        input_text = state["report_text"]
+        self.input_text = state["report_text"]
         
-        llm_report_structure = self.llm.with_structured_output(WellnessReport)
+        try:
         
-        output = llm_report_structure.invoke([
-            SystemMessage(content=SYSTEM_PROMPT),
-            HumanMessage(content = input_text)
-        ])
-        
-        final_output = output.model_dump_json(indent=4)
-        
-        state["output"] = final_output
-        
+            self.llm_report_structure = self.llm.with_structured_output(WellnessReport)
+            
+            self.output = self.llm_report_structure.invoke([
+                SystemMessage(content=SYSTEM_PROMPT),
+                HumanMessage(content = self.input_text)
+            ])
+            
+            self.final_output = self.output.model_dump_json(indent=4)
+            
+            state["output"] = self.final_output
+            
+        except ValueError as e:
+            self.fall_back_report = WellnessReport(
+                patient_name = None,
+                report_date = None,
+                lab_values = [],
+                wellness_insight = "Unable to generate detailed insights. Please ensure the medical report contains valid test results."
+            )
+            state["output"] = self.fall_back_report.model_dump_json(indent=4)
+            logger.error(f"Validation Error: {e}")
+            
         return state
     
     ### Node 3
-    def not_report(state: ReportState):
+    def not_report(self, state: ReportState):
         """
             Handle cases where the input text is not a valid medical or lab report.
 
@@ -77,7 +96,7 @@ class ReportNode:
         return state
     
     ### decision function
-    def router_decision(state: ReportState):
+    def router_decision(self, state: ReportState):
         """
             Decide the next action based on whether the report is medical.
 

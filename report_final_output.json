@@ -1,0 +1,119 @@
+{
+    "patient_name": "M.MANISHLODHA",
+    "report_date": "14/Apr/2023",
+    "lab_values": [
+        {
+            "test_name": "Hemoglobin",
+            "value": 15.6,
+            "unit": "g/dL",
+            "ref_ranges": "13.0-17.0",
+            "status": "within"
+        },
+        {
+            "test_name": "RBC",
+            "value": 5.16,
+            "unit": "10^6/cu.mm",
+            "ref_ranges": "4.5-5.5",
+            "status": "within"
+        },
+        {
+            "test_name": "HCT",
+            "value": 44.6,
+            "unit": "%",
+            "ref_ranges": "40-50",
+            "status": "within"
+        },
+        {
+            "test_name": "MCV",
+            "value": 86.5,
+            "unit": "fl",
+            "ref_ranges": "83-101",
+            "status": "within"
+        },
+        {
+            "test_name": "MCH",
+            "value": 30.3,
+            "unit": "pg",
+            "ref_ranges": "27-32",
+            "status": "within"
+        },
+        {
+            "test_name": "MCHC",
+            "value": 35.0,
+            "unit": "g/dL",
+            "ref_ranges": "31.5-34.5",
+            "status": "above"
+        },
+        {
+            "test_name": "RDW-CV",
+            "value": 16.2,
+            "unit": "%",
+            "ref_ranges": "11.6-14",
+            "status": "above"
+        },
+        {
+            "test_name": "Total Leucocyte Count",
+            "value": 6.26,
+            "unit": "10^3/μl",
+            "ref_ranges": "4-10",
+            "status": "within"
+        },
+        {
+            "test_name": "Neutrophils",
+            "value": 55.0,
+            "unit": "%",
+            "ref_ranges": "40-80",
+            "status": "within"
+        },
+        {
+            "test_name": "Lymphocytes",
+            "value": 34.0,
+            "unit": "%",
+            "ref_ranges": "20-40",
+            "status": "within"
+        },
+        {
+            "test_name": "Monocytes",
+            "value": 9.0,
+            "unit": "%",
+            "ref_ranges": "1-10",
+            "status": "within"
+        },
+        {
+            "test_name": "Eosinophils",
+            "value": 2.0,
+            "unit": "%",
+            "ref_ranges": "1-6",
+            "status": "within"
+        },
+        {
+            "test_name": "Basophils",
+            "value": 0.0,
+            "unit": "%",
+            "ref_ranges": "0-2",
+            "status": "within"
+        },
+        {
+            "test_name": "Platelet Count",
+            "value": 281.0,
+            "unit": "10^3/μl",
+            "ref_ranges": "150-410",
+            "status": "within"
+        },
+        {
+            "test_name": "MPV",
+            "value": 10.2,
+            "unit": "fl",
+            "ref_ranges": "6.5-12",
+            "status": "within"
+        },
+        {
+            "test_name": "PDW",
+            "value": 16.0,
+            "unit": "fl",
+            "ref_ranges": "11-22",
+            "status": "within"
+        }
+    ],
+    "wellness_insight": "Stay hydrated with 8-10 glasses of water daily and include iron-rich foods like spinach to maintain healthy blood cell production."
+}

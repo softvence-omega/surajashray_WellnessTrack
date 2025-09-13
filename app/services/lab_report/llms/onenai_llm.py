@@ -1,7 +1,7 @@
 from langchain_openai import ChatOpenAI
 
-from ....config import OPENAI_API_KEY, MODEL_NAME, TEMPERATURE, LOG_DIR
-from ....utils.logger import get_logger
+from app.config import OPENAI_API_KEY, MODEL_NAME, TEMPERATURE
+from app.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -16,11 +16,11 @@ class OpenAILLM:
         try:
             logger.info("OpenAI Model Initializing.....")
             
-            llm = ChatOpenAI(
+            self.llm = ChatOpenAI(
                 model=MODEL_NAME,
                 temperature=TEMPERATURE,
                 api_key=OPENAI_API_KEY
             )
-            return llm
+            return self.llm
         except Exception as e:
             raise ValueError(f"Error Occurred with Exception: {e}")
