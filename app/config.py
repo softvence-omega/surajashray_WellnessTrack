@@ -11,6 +11,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 MODEL_NAME = "gpt-4o"
 TEMPERATURE = 0
 LOG_DIR = "logs"
+TEMP_FOLDER_NAME = "temp"
 
 
 

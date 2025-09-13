@@ -15,5 +15,6 @@ dependencies = [
     "langgraph>=0.6.7",
     "pydantic>=2.11.7",
     "python-doctr>=1.0.0",
+    "python-multipart>=0.0.20",
     "uvicorn>=0.35.0",
 ]

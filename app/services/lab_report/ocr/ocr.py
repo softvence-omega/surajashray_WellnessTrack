@@ -39,8 +39,8 @@ class OCR:
     def img_to_text(self, img_file) -> str:     
         try:
             self.model = ocr_predictor(det_arch="db_resnet50",reco_arch="crnn_mobilenet_v3_large",pretrained=True)
-            self.pdf = DocumentFile.from_images(img_file)
-            self.result = self.model(self.pdf)
+            self.img = DocumentFile.from_images(img_file)
+            self.result = self.model(self.img)
             self.result = self.result.export()
 
             self.final_text = self.format_text(self.result)
