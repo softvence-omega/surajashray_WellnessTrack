@@ -8,6 +8,7 @@ from app.config import TEMP_FOLDER_NAME
 from app.services.lab_report.ocr.ocr import OCR
 from app.services.lab_report.graph.graph import LabReportGraph
 from app.services.lab_report.llms.onenai_llm import OpenAILLM
+from app.utils.helper import delete_file
 
 
 router = APIRouter()
@@ -24,7 +25,7 @@ def get_graph():
 
 
 @router.post("/lab_report_analysis")
-async def lab_report(file : UploadFile = File(...), ocr = Depends(get_ocr), graph = Depends(get_graph)):
+async def lab_report(file : UploadFile = File(...), ocr = Depends(get_ocr), graph = Depends(get_graph), background_task : BackgroundTasks = None):
     
     allowed_file_types = ["image/jpeg","image/png","image/bmp", "application/pdf"]
     
@@ -51,6 +52,8 @@ async def lab_report(file : UploadFile = File(...), ocr = Depends(get_ocr), grap
                 "report_text" : pdf_data
             })
             
+            background_task.add_task(delete_file, TEMP_FOLDER_NAME)
+            
             return JSONResponse({
                 "file_name" : file.filename,
                 "pdf_to_text" : json.loads(pdf_text["output"])
@@ -62,6 +65,8 @@ async def lab_report(file : UploadFile = File(...), ocr = Depends(get_ocr), grap
             img_text = graph_builder.invoke({
                 "report_text" : img_data
             })
+            
+            background_task.add_task(delete_file, TEMP_FOLDER_NAME)
             
             return JSONResponse({
                 "file_name" : file.filename,
