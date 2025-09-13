@@ -1,6 +1,10 @@
 from doctr.models import ocr_predictor
 from doctr.io import DocumentFile
 
+from app.utils.logger import get_logger
+
+logger = get_logger(__name__)
+
 
 class OCR:
     
@@ -24,7 +28,9 @@ class OCR:
     def pdf_to_text(self, pdf_file) -> str:
         
         try:
+            logger.info("OCR Model Start Downloading..........")
             self.model = ocr_predictor(det_arch="db_resnet50",reco_arch="crnn_mobilenet_v3_large",pretrained=True)
+            logger.info("OCR Model Download Completed..........")
             self.pdf = DocumentFile.from_pdf(pdf_file)
             self.result = self.model(self.pdf)
             self.result = self.result.export()
@@ -38,7 +44,9 @@ class OCR:
     # for img file
     def img_to_text(self, img_file) -> str:     
         try:
+            logger.info("OCR Model Start Downloading..........")
             self.model = ocr_predictor(det_arch="db_resnet50",reco_arch="crnn_mobilenet_v3_large",pretrained=True)
+            logger.info("OCR Model Download Completed..........")
             self.img = DocumentFile.from_images(img_file)
             self.result = self.model(self.img)
             self.result = self.result.export()
