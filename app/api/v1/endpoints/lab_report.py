@@ -56,7 +56,7 @@ async def lab_report(file : UploadFile = File(...), ocr = Depends(get_ocr), grap
             
             return JSONResponse({
                 "file_name" : file.filename,
-                "pdf_to_text" : json.loads(pdf_text["output"])
+                "report_text" : json.loads(pdf_text["output"])
             })
         elif file.content_type.startswith("image/"):
             print("Image calling.........")
@@ -70,11 +70,7 @@ async def lab_report(file : UploadFile = File(...), ocr = Depends(get_ocr), grap
             
             return JSONResponse({
                 "file_name" : file.filename,
-                "img_to_text" : json.loads(img_text["output"])
-            })
-        else:
-            return JSONResponse({
-                "Error" : "Something Went Wrong!!!!"
+                "report_text" : json.loads(img_text["output"])
             })
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
