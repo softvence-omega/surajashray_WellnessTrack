@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
 ## Load .env
 load_dotenv()
@@ -14,8 +15,8 @@ LOG_DIR = "logs"
 TEMP_FOLDER_NAME = "temp"
 
 # Model
-DETECTION_MODEL = "model/db_resnet50.pt"
-RECOGNIZE_MODEL = "model/crnn_mobilenet_v3_large_pt.pt"
+DETECTION_MODEL = Path("app/model/db_resnet50.pt")
+RECOGNIZE_MODEL = Path("app/model/crnn_mobilenet_v3_large_pt.pt")
 
 
 

@@ -1,4 +1,5 @@
 from langchain_core.messages import HumanMessage, SystemMessage
+import json
 
 from app.services.lab_report.state.state import ReportState
 from app.schemas.schema import MedicalReportClassify, WellnessReport
@@ -91,7 +92,8 @@ class ReportNode:
                 ReportState: Updated state with 'output' containing an error message.
         """
         print("NOT ACTUAL REPORT............")
-        state["output"] = "The provided text does not appear to be a medical or lab report. Please upload a valid health report for analysis."
+        self.data = "The provided text does not appear to be a medical or lab report. Please upload a valid health report for analysis."
+        state["output"] = json.dumps(self.data, indent=4)
         
         return state
     

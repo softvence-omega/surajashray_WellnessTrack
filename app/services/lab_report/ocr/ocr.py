@@ -1,7 +1,8 @@
-from doctr.models import ocr_predictor
+from doctr.models import ocr_predictor, db_resnet50, crnn_mobilenet_v3_large
 from doctr.io import DocumentFile
 
 from app.utils.logger import get_logger
+from app.config import DETECTION_MODEL, RECOGNIZE_MODEL
 
 logger = get_logger(__name__)
 
@@ -9,7 +10,11 @@ logger = get_logger(__name__)
 class OCR:
     
     def __init__(self):
-        pass
+        self.detection_model = db_resnet50(pretrained=False, pretrained_backbone = False)
+        self.detection_model.from_pretrained(path_or_url=DETECTION_MODEL, map_location = False)
+
+        self.recognize_model = crnn_mobilenet_v3_large(pretrained=False, pretrained_backbone = False) 
+        self.recognize_model.from_pretrained(path_or_url=RECOGNIZE_MODEL, map_location = False)
     
     @staticmethod
     def format_text(text) -> str:
@@ -28,9 +33,8 @@ class OCR:
     def pdf_to_text(self, pdf_file) -> str:
         
         try:
-            logger.info("OCR Model Start Downloading..........")
-            self.model = ocr_predictor(det_arch="db_resnet50",reco_arch="crnn_mobilenet_v3_large",pretrained=True)
-            logger.info("OCR Model Download Completed..........")
+            logger.info("OCR Model Initializing For PDF to Text..........")
+            self.model = ocr_predictor(det_arch=self.detection_model,reco_arch=self.recognize_model,pretrained=True)
             self.pdf = DocumentFile.from_pdf(pdf_file)
             self.result = self.model(self.pdf)
             self.result = self.result.export()
@@ -44,9 +48,8 @@ class OCR:
     # for img file
     def img_to_text(self, img_file) -> str:     
         try:
-            logger.info("OCR Model Start Downloading..........")
-            self.model = ocr_predictor(det_arch="db_resnet50",reco_arch="crnn_mobilenet_v3_large",pretrained=True)
-            logger.info("OCR Model Download Completed..........")
+            logger.info("OCR Model Initializing For Img to Text..........")
+            self.model = ocr_predictor(det_arch=self.detection_model,reco_arch=self.recognize_model,pretrained=True)
             self.img = DocumentFile.from_images(img_file)
             self.result = self.model(self.img)
             self.result = self.result.export()
@@ -58,3 +61,5 @@ class OCR:
             raise ValueError(e)
         
         
+
+
