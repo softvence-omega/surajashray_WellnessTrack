@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+from langchain_openai import ChatOpenAI
+
 
 ## Load .env
 load_dotenv()
@@ -19,6 +21,8 @@ DETECTION_MODEL = Path("app/model/db_resnet50.pt")
 RECOGNIZE_MODEL = Path("app/model/crnn_mobilenet_v3_large_pt.pt")
 
 
+# LLM setup
+base_model = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 # Prompt
 # SYSTEM_PROMPT = """
