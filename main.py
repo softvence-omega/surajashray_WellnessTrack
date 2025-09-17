@@ -7,7 +7,7 @@ app = FastAPI()
 
 # Router Include
 app.include_router(lab_report.router)
-app.include_router(meal_scaner.router, prefix="/api/v1", tags=["meal"])
+app.include_router(meal_scaner.router)
 
 
 if __name__ == "__main__":
