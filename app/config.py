@@ -10,6 +10,12 @@ load_dotenv()
 ## OpenAI API key
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
+## cloudinary api key
+CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME")
+CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY")
+CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET")
+
+
 # Parameters
 MODEL_NAME = "gpt-4o"
 TEMPERATURE = 0

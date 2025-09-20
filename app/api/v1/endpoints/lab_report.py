@@ -9,6 +9,7 @@ from app.services.lab_report.ocr.ocr import OCR
 from app.services.lab_report.graph.graph import LabReportGraph
 from app.services.lab_report.llms.onenai_llm import OpenAILLM
 from app.utils.helper import delete_file
+from app.utils.helper import cloudinary_file_upload
 
 
 router = APIRouter()
@@ -21,7 +22,6 @@ def get_graph():
     llm = llm_model.get_llm_model()
     graph = LabReportGraph(model=llm)
     return graph
-
 
 
 @router.post("/lab_report_analysis")
@@ -56,7 +56,8 @@ async def lab_report(file : UploadFile = File(...), ocr = Depends(get_ocr), grap
             
             return JSONResponse({
                 "file_name" : file.filename,
-                "report_text" : json.loads(pdf_text["output"])
+                "report_text" : json.loads(pdf_text["output"]),
+                "file_url" : cloudinary_file_upload(temp_file_path)
             })
         elif file.content_type.startswith("image/"):
             print("Image calling.........")
@@ -70,7 +71,8 @@ async def lab_report(file : UploadFile = File(...), ocr = Depends(get_ocr), grap
             
             return JSONResponse({
                 "file_name" : file.filename,
-                "report_text" : json.loads(img_text["output"])
+                "report_text" : json.loads(img_text["output"]),
+                "file_url" : cloudinary_file_upload(temp_file_path)
             })
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

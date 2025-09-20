@@ -12,3 +12,4 @@ wheels/
 logs/
 temp_data/
 notebook/
+uv.lock

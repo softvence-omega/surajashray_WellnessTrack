@@ -9,3 +9,4 @@ fastapi
 python-doctr
 pydantic
 python-multipart
+cloudinary 
