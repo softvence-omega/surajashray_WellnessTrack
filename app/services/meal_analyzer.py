@@ -1,17 +1,15 @@
+# meal_analyzer.py
 from fastapi import HTTPException
-import base64
-from langgraph.graph import StateGraph, START, END
-from ..config import base_model
-from ..schemas.meal_evaluation import Evaluation
 from ..schemas.mealstate import MealState
+from ..schemas.meal_evaluation import Evaluation
+from ..config import base_model
 
-# Structured model
 structured_model = base_model.with_structured_output(Evaluation)
 
-def analyze_food(state: MealState) -> MealState:
+async def analyze_food(state: MealState) -> MealState:
     try:
         image_url = f"data:image/jpeg;base64,{state['image_base64']}"
-        resp = structured_model.invoke(
+        resp = await structured_model.ainvoke(
             [
                 {"role": "system", "content": "You are a nutrition expert."},
                 {
