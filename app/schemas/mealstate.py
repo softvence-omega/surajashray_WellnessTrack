@@ -3,4 +3,4 @@ from .meal_evaluation import Evaluation
 
 class MealState(TypedDict):
     image_base64: str
-    nutrition: Optional[Evaluation]
+    evaluation: Optional[Evaluation]
