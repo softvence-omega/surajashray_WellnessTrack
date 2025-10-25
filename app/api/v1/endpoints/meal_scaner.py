@@ -15,9 +15,12 @@ async def analyze_food_endpoint(file: UploadFile = File(...)):
             raise HTTPException(status_code=400, detail="Uploaded file is empty.")
         
         image_base64 = base64.b64encode(image_bytes).decode("utf-8")
-
-        result: MealState = await compiled_graph.ainvoke({"image_base64": image_base64, "nutrition": None})
-        return JSONResponse(content={"nutrition": result["nutrition"].dict()})
+        result: MealState = await compiled_graph.ainvoke({"image_base64": image_base64, "evaluation": None})
+        
+        return JSONResponse(content={
+            "meal_name": result["evaluation"].meal_name,
+            "nutrition": result["evaluation"].nutrition.dict()
+        })
     except HTTPException:
         raise
     except Exception as e:
